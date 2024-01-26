@@ -16,6 +16,10 @@ const Productschema = new mongoose.Schema(
         qtyonhand:{
             type:Number,
             required:true
+        },
+        image:{
+            type:String,
+            required:true
         }
     }
 );

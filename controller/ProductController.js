@@ -43,18 +43,24 @@ const update = async (req, resp) => {
     { new: true }
   );
   if (updateProduct) {
-    resp.status(200).json({ message: "update Product" });
+    resp.status(200).json({ 'message': "update Product" });
   } else {
-    resp.status(500).json({ error: "not update Product" });
+    resp.status(500).json({ 'error': "not update Product" });
   }
 };
 
-const deletebyid = (req, resp) => {
-  const deleteProduct = Product.findOneAndDelete({ _id: req.query.id });
-  if (deleteProduct) {
-    resp.status(204).json({ message: "delete Product" });
-  } else {
-    resp.status(500).json({ error: "not delete Product" });
+const deletebyid = async(req, resp) => {
+  try {
+    console.log(req.query.id);
+    const deleteProduct = await Product.findOneAndDelete({ _id: req.query.id });
+
+    if (deleteProduct) {
+      resp.status(206).json({ message: "Product deleted" });
+    } else {
+      resp.status(500).json({ error: "Product not deleted" });
+    }
+  } catch (error) {
+    resp.status(500).json({ error: "Product not deleted" });
   }
 };
 
